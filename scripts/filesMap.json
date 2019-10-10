@@ -1,0 +1,14 @@
+{
+  "darwin": [
+    {
+      "from": "/libmorfeusz2.dylib",
+      "to": "./libmorfeusz2.dylib"
+    }
+  ],
+  "linux": [
+    {
+      "from": "/libmorfeusz2.so",
+      "to": "./libmorfeusz2.so"
+    }
+  ]
+}

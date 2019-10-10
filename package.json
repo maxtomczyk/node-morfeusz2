@@ -1,0 +1,31 @@
+{
+  "name": "morfeusz2",
+  "version": "0.1.0",
+  "description": "Morfeusz2 node bindings",
+  "gypfile": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node-gyp rebuild",
+    "preinstall": "node scripts/install.js",
+    "postinstall": "chmod 755 ./scripts/reloadShell.sh && ./scripts/reloadShell.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxtomczyk/node-morfeusz2.git"
+  },
+  "author": "Maksymilian Tomczyk <m.tomczyk.dev@gmail.com>",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/maxtomczyk/node-morfeusz2/issues"
+  },
+  "homepage": "https://github.com/maxtomczyk/node-morfeusz2#readme",
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "node-addon-api": "^1.7.1"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {}
+}
