@@ -1,20 +1,32 @@
 #include "../headers/main.h"
 
 MorfeuszWrapper::MorfeuszWrapper() {
-  m = Morfeusz::createInstance();
+  m = morfeusz::Morfeusz::createInstance();
 }
 
 std::string MorfeuszWrapper::getVersion() {
   return m->getVersion();
 }
 
-ResultsIterator* MorfeuszWrapper::analyze(std::string text) {
+morfeusz::ResultsIterator* MorfeuszWrapper::analyze(std::string text) {
   return m->analyse(text);
 }
 
-void MorfeuszWrapper::analyze(std::string text, std::vector<MorphInterpretation>& r) {
+void MorfeuszWrapper::analyze(std::string text, std::vector<morfeusz::MorphInterpretation>& r) {
   m->analyse(text, r);
 }
+
+const morfeusz::IdResolver& MorfeuszWrapper::getResolver() {
+  return m->getIdResolver();
+}
+
+const morfeusz::Morfeusz* MorfeuszWrapper::getMorfeusz() {
+  return m;
+}
+
+void MorfeuszWrapper::setAggl(std::string param) {
+  m->setAggl(param);
+} 
 
 //// ==================================================================
 //// NODE API CALLBACKS
@@ -40,21 +52,24 @@ Napi::String DictCopyright(const Napi::CallbackInfo& info) {
 Napi::Array Analyze(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   std::string v = info[0].ToString();
-  std::cout << v << std::endl;
-  std::vector<MorphInterpretation> results;
-  MorfeuszWrapper::getInstance().analyze(v, results);
-  int resultsLen = results.size();
-  std::cout << resultsLen << std::endl;
 
+  // MorfeuszWrapper::getInstance().setAggl("isolated");
+  std::vector<morfeusz::MorphInterpretation> results;
+  MorfeuszWrapper::getInstance().analyze(v, results);
+  // const morfeusz::IdResolver & idr = MorfeuszWrapper::getInstance().getResolver();
+  int resultsLen = results.size();
   Napi::Array arr = Napi::Array::New(env, resultsLen);
   int i = 0;
   while(i<resultsLen) {
-    MorphInterpretation inter = results[i];
+    morfeusz::MorphInterpretation inter = results[i];
     Napi::Object obj = Napi::Object::New(env);
     obj.Set("startNode", inter.startNode);
     obj.Set("endNode", inter.endNode);
     obj.Set("orth", inter.orth);
     obj.Set("lemma", inter.lemma);
+    obj.Set("tagId", inter.getTag(*MorfeuszWrapper::getInstance().getMorfeusz()));
+    obj.Set("name", inter.getName(*MorfeuszWrapper::getInstance().getMorfeusz()));
+    obj.Set("labels", inter.getLabelsAsString(*MorfeuszWrapper::getInstance().getMorfeusz()));
     arr[i] = obj;
     i++;
   }

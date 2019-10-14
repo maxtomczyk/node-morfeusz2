@@ -20,11 +20,12 @@ function analyze (text) {
 //   text += 'rgv'+i
 //   console.log(analyze(text+'\n'))
 // }
-console.log(version())
-console.log(analyze('Chciałbym kiedyś pójść gdzieś na ryby, które są mi ulubione'))
+// console.log(version())
+// console.log(analyze('Chciałbym kiedyś pójść gdzieś na ryby, które są mi ulubione'))
 
 module.exports = {
   version,
   copyright,
-  dictCopyright
+  dictCopyright,
+  analyze
 }

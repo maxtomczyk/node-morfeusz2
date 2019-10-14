@@ -3,11 +3,9 @@
 #include <iostream>
 #include <vector>
 
-using namespace morfeusz;
-
 class MorfeuszWrapper {
   private:
-    Morfeusz *m;
+    morfeusz::Morfeusz *m;
     MorfeuszWrapper();
     MorfeuszWrapper( const MorfeuszWrapper & );
 
@@ -21,6 +19,11 @@ class MorfeuszWrapper {
     std::string getVersion();
     std::string getCopyright();
     std::string getDictCopyright();
-    ResultsIterator* analyze(std::string text);
-    void analyze(std::string text, std::vector<MorphInterpretation>& r);
+    morfeusz::ResultsIterator* analyze(std::string text);
+    void analyze(std::string text, std::vector<morfeusz::MorphInterpretation>& r);
+
+    const morfeusz::IdResolver& getResolver();
+    const morfeusz::Morfeusz* getMorfeusz();
+
+    void setAggl(std::string param);
 };
