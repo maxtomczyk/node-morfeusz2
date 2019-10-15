@@ -26,4 +26,5 @@ class MorfeuszWrapper {
     const morfeusz::Morfeusz* getMorfeusz();
 
     void setAggl(std::string param);
+    void setPraet(std::string param);
 };

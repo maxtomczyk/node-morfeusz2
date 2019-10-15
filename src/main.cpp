@@ -28,6 +28,10 @@ void MorfeuszWrapper::setAggl(std::string param) {
   m->setAggl(param);
 } 
 
+void MorfeuszWrapper::setPraet(std::string param) {
+  m->setPraet(param);
+}
+
 //// ==================================================================
 //// NODE API CALLBACKS
 
@@ -53,8 +57,8 @@ Napi::Array Analyze(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   std::string v = info[0].ToString();
 
-  // MorfeuszWrapper::getInstance().setAggl("isolated");
   std::vector<morfeusz::MorphInterpretation> results;
+  MorfeuszWrapper::getInstance().setPraet("composite");
   MorfeuszWrapper::getInstance().analyze(v, results);
   // const morfeusz::IdResolver & idr = MorfeuszWrapper::getInstance().getResolver();
   int resultsLen = results.size();
