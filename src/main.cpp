@@ -1,37 +1,5 @@
 #include "../headers/main.h"
 
-MorfeuszWrapper::MorfeuszWrapper() {
-  m = morfeusz::Morfeusz::createInstance();
-}
-
-std::string MorfeuszWrapper::getVersion() {
-  return m->getVersion();
-}
-
-morfeusz::ResultsIterator* MorfeuszWrapper::analyze(std::string text) {
-  return m->analyse(text);
-}
-
-void MorfeuszWrapper::analyze(std::string text, std::vector<morfeusz::MorphInterpretation>& r) {
-  m->analyse(text, r);
-}
-
-const morfeusz::IdResolver& MorfeuszWrapper::getResolver() {
-  return m->getIdResolver();
-}
-
-const morfeusz::Morfeusz* MorfeuszWrapper::getMorfeusz() {
-  return m;
-}
-
-void MorfeuszWrapper::setAggl(std::string param) {
-  m->setAggl(param);
-} 
-
-void MorfeuszWrapper::setPraet(std::string param) {
-  m->setPraet(param);
-}
-
 //// ==================================================================
 //// NODE API CALLBACKS
 
@@ -59,6 +27,7 @@ Napi::Array Analyze(const Napi::CallbackInfo& info) {
 
   std::vector<morfeusz::MorphInterpretation> results;
   MorfeuszWrapper::getInstance().setPraet("composite");
+  MorfeuszWrapper::getInstance().setWhitespaceHandling(morfeusz::KEEP_WHITESPACES);
   MorfeuszWrapper::getInstance().analyze(v, results);
   // const morfeusz::IdResolver & idr = MorfeuszWrapper::getInstance().getResolver();
   int resultsLen = results.size();
